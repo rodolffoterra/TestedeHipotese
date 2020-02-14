@@ -1,0 +1,768 @@
+\PassOptionsToPackage{unicode=true}{hyperref} % options for packages loaded elsewhere
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provides euro and other symbols
+\else % if luatex or xelatex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage[]{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\usepackage{hyperref}
+\hypersetup{
+            pdftitle={Existe diferença significante de atrasos de voo entre duas companhia aéreas?},
+            pdfauthor={Rodolfo R. Terra \textbar{} Cientista de Dados},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+% set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+
+
+\title{Existe diferença significante de atrasos de voo entre duas companhia
+aéreas?}
+\author{Rodolfo R. Terra \textbar{} Cientista de Dados}
+\date{}
+
+\begin{document}
+\maketitle
+
+Sumário
+
+\ldots{}
+
+1.Coletando os Dados
+
+2.Exploração de Dados
+
+3.Construindo o Dataset
+
+4.Criação de Amostragem
+
+5.Intervalo de Confiança
+
+6.Gráfico dos Intervalos de Confiança
+
+7.Criação do Teste de Hipótese
+
+7.1.Teste t
+
+7.2.Valor p
+
+8.Conclusão
+
+Definição do Problema de Negócio
+
+Para analisar se existe diferença de atraso de vôo entre a companhia
+utilizaremos teste de hipósete de um conjunto de dados que possui
+336,776 observações e 19 variáveis, chamado flights", que demonstram
+dados pontuais de todos os voos que partiram de Nova York em 2013.
+Dentre estas companhia escolheremos duas companhias: Delta Airlines (DL)
+e a United Airlines (UA).
+
+Etapa 1 - Coletando os Dados
+
+Aqui está a coleta de dados.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Coletando dados}
+\KeywordTok{library}\NormalTok{(}\StringTok{'ggplot2'}\NormalTok{)}
+\KeywordTok{library}\NormalTok{(}\StringTok{'dplyr'}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Attaching package: 'dplyr'
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:stats':
+## 
+##     filter, lag
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:base':
+## 
+##     intersect, setdiff, setequal, union
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(}\StringTok{'nycflights13'}\NormalTok{)}
+\KeywordTok{head}\NormalTok{(flights)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 6 x 19
+##    year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
+##   <int> <int> <int>    <int>          <int>     <dbl>    <int>          <int>
+## 1  2013     1     1      517            515         2      830            819
+## 2  2013     1     1      533            529         4      850            830
+## 3  2013     1     1      542            540         2      923            850
+## 4  2013     1     1      544            545        -1     1004           1022
+## 5  2013     1     1      554            600        -6      812            837
+## 6  2013     1     1      554            558        -4      740            728
+## # ... with 11 more variables: arr_delay <dbl>, carrier <chr>, flight <int>,
+## #   tailnum <chr>, origin <chr>, dest <chr>, air_time <dbl>, distance <dbl>,
+## #   hour <dbl>, minute <dbl>, time_hour <dttm>
+\end{verbatim}
+
+Etapa 2 - Exploração dos Dados
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{head}\NormalTok{(flights)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 6 x 19
+##    year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
+##   <int> <int> <int>    <int>          <int>     <dbl>    <int>          <int>
+## 1  2013     1     1      517            515         2      830            819
+## 2  2013     1     1      533            529         4      850            830
+## 3  2013     1     1      542            540         2      923            850
+## 4  2013     1     1      544            545        -1     1004           1022
+## 5  2013     1     1      554            600        -6      812            837
+## 6  2013     1     1      554            558        -4      740            728
+## # ... with 11 more variables: arr_delay <dbl>, carrier <chr>, flight <int>,
+## #   tailnum <chr>, origin <chr>, dest <chr>, air_time <dbl>, distance <dbl>,
+## #   hour <dbl>, minute <dbl>, time_hour <dttm>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Visualizando as variáveis}
+\KeywordTok{str}\NormalTok{(flights)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Classes 'tbl_df', 'tbl' and 'data.frame':    336776 obs. of  19 variables:
+##  $ year          : int  2013 2013 2013 2013 2013 2013 2013 2013 2013 2013 ...
+##  $ month         : int  1 1 1 1 1 1 1 1 1 1 ...
+##  $ day           : int  1 1 1 1 1 1 1 1 1 1 ...
+##  $ dep_time      : int  517 533 542 544 554 554 555 557 557 558 ...
+##  $ sched_dep_time: int  515 529 540 545 600 558 600 600 600 600 ...
+##  $ dep_delay     : num  2 4 2 -1 -6 -4 -5 -3 -3 -2 ...
+##  $ arr_time      : int  830 850 923 1004 812 740 913 709 838 753 ...
+##  $ sched_arr_time: int  819 830 850 1022 837 728 854 723 846 745 ...
+##  $ arr_delay     : num  11 20 33 -18 -25 12 19 -14 -8 8 ...
+##  $ carrier       : chr  "UA" "UA" "AA" "B6" ...
+##  $ flight        : int  1545 1714 1141 725 461 1696 507 5708 79 301 ...
+##  $ tailnum       : chr  "N14228" "N24211" "N619AA" "N804JB" ...
+##  $ origin        : chr  "EWR" "LGA" "JFK" "JFK" ...
+##  $ dest          : chr  "IAH" "IAH" "MIA" "BQN" ...
+##  $ air_time      : num  227 227 160 183 116 150 158 53 140 138 ...
+##  $ distance      : num  1400 1416 1089 1576 762 ...
+##  $ hour          : num  5 5 5 5 6 5 6 6 6 6 ...
+##  $ minute        : num  15 29 40 45 0 58 0 0 0 0 ...
+##  $ time_hour     : POSIXct, format: "2013-01-01 05:00:00" "2013-01-01 05:00:00" ...
+\end{verbatim}
+
+Medidas de Tendência Central da Variável Numéricas
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(flights}\OperatorTok{$}\NormalTok{arr_delay)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max.     NA's 
+##  -86.000  -17.000   -5.000    6.895   14.000 1272.000     9430
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Tabela de contigêcia das linhas aéreas}
+\KeywordTok{table}\NormalTok{(flights}\OperatorTok{$}\NormalTok{carrier)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##    9E    AA    AS    B6    DL    EV    F9    FL    HA    MQ    OO    UA    US 
+## 18460 32729   714 54635 48110 54173   685  3260   342 26397    32 58665 20536 
+##    VX    WN    YV 
+##  5162 12275   601
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#Histograma}
+\KeywordTok{hist}\NormalTok{(flights}\OperatorTok{$}\NormalTok{arr_delay, }\DataTypeTok{main =} \StringTok{'Histograma 1'}\NormalTok{, }\DataTypeTok{xlab =} \StringTok{'Atraso de Voo'}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{relatorio_final_files/figure-latex/summary-1.pdf}
+
+Etapa 3 - Construindo o Dataset
+
+Construção do dataset pop\_data com os dados de voos das companhias
+aéreas UA (United Airlines) e DL (Delta Airlines). Contruiremos um
+dataset irá conter apenas duas colunas, nome da companhia e atraso nos
+voos de chegada. Será conssiderado este dataset como sendo nossa
+população de voos:
+
+Metodologia da formula:
+
+\begin{itemize}
+\item
+  1º eliminação de todos os dados na (Valores missing, não disponivel);
+\item
+  2º Filtro pela companhia aérea UA (United Airlines) e DL (Delta
+  Airlines);
+\item
+  3º Filtro para retornar apenas os valores que forem igual ou maior a
+  `Zero'. Os valores negativos serão descontiderádos;
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pop_data =}\StringTok{ }\KeywordTok{na.omit}\NormalTok{(flights) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{filter}\NormalTok{(carrier }\OperatorTok{==}\StringTok{ 'UA'} \OperatorTok{|}\StringTok{ }\NormalTok{carrier }\OperatorTok{==}\StringTok{ 'DL'}\NormalTok{, arr_delay }\OperatorTok{>=}\DecValTok{0}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{select}\NormalTok{(carrier, arr_delay) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{group_by}\NormalTok{(carrier) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{sample_n}\NormalTok{(}\DecValTok{17000}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{ungroup}\NormalTok{()}
+
+
+\KeywordTok{head}\NormalTok{(pop_data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 6 x 2
+##   carrier arr_delay
+##   <chr>       <dbl>
+## 1 DL             17
+## 2 DL              4
+## 3 DL              5
+## 4 DL              7
+## 5 DL            235
+## 6 DL             87
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{tail}\NormalTok{(pop_data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 6 x 2
+##   carrier arr_delay
+##   <chr>       <dbl>
+## 1 UA              7
+## 2 UA             13
+## 3 UA             14
+## 4 UA             39
+## 5 UA              5
+## 6 UA             10
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{hist}\NormalTok{(pop_data}\OperatorTok{$}\NormalTok{arr_delay, }\DataTypeTok{main =} \StringTok{'Histograma 2'}\NormalTok{, }\DataTypeTok{xlab =} \StringTok{'Atraso de Voo'}\NormalTok{, }\DataTypeTok{ylab=}\StringTok{"Frequencia"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{relatorio_final_files/figure-latex/modelagem-1.pdf}
+
+É importante observar que neste histograma removemos os valores
+negativos, pois temos como principal objetivo observar somente os
+atrasos de voos. Os valores no conjunto de dados que representam menores
+que zero seguinifica que o voo chegou a sei destido antes da data
+prevista, então não houve atraso.
+
+Etapa 4 - Criação de Amostragem
+
+Criação de duas amostras de 1000 observações cada uma a partir do
+dataset pop\_data apenas com dados da companhia DL para amostra 1 e
+apenas dados da companhia UA na amostra 2.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{amostra1 <-}\StringTok{ }\KeywordTok{na.omit}\NormalTok{(pop_data) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{select}\NormalTok{(carrier, arr_delay) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{filter}\NormalTok{(carrier }\OperatorTok{==}\StringTok{ 'DL'}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{sample_id =} \StringTok{'1'}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{sample_n}\NormalTok{(}\DecValTok{1000}\NormalTok{)}
+                      
+\KeywordTok{head}\NormalTok{(amostra1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 6 x 3
+##   carrier arr_delay sample_id
+##   <chr>       <dbl> <chr>    
+## 1 DL              7 1        
+## 2 DL             18 1        
+## 3 DL             16 1        
+## 4 DL              1 1        
+## 5 DL             25 1        
+## 6 DL              6 1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{amostra2 <-}\StringTok{ }\KeywordTok{na.omit}\NormalTok{(pop_data) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{select}\NormalTok{(carrier, arr_delay) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{filter}\NormalTok{(carrier }\OperatorTok{==}\StringTok{ "UA"}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{sample_id =} \StringTok{"2"}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{sample_n}\NormalTok{(}\DecValTok{1000}\NormalTok{)}
+
+\KeywordTok{head}\NormalTok{(amostra2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 6 x 3
+##   carrier arr_delay sample_id
+##   <chr>       <dbl> <chr>    
+## 1 UA             13 2        
+## 2 UA             12 2        
+## 3 UA             15 2        
+## 4 UA              3 2        
+## 5 UA              8 2        
+## 6 UA              7 2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Criação de um dataset contendo os dados das 2 amostras criadas no item anterior. }
+
+\NormalTok{samples =}\StringTok{ }\KeywordTok{rbind}\NormalTok{(amostra1, amostra2)}
+\KeywordTok{head}\NormalTok{(samples)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 6 x 3
+##   carrier arr_delay sample_id
+##   <chr>       <dbl> <chr>    
+## 1 DL              7 1        
+## 2 DL             18 1        
+## 3 DL             16 1        
+## 4 DL              1 1        
+## 5 DL             25 1        
+## 6 DL              6 1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{tail}\NormalTok{(samples)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 6 x 3
+##   carrier arr_delay sample_id
+##   <chr>       <dbl> <chr>    
+## 1 UA              8 2        
+## 2 UA              4 2        
+## 3 UA             72 2        
+## 4 UA            115 2        
+## 5 UA              5 2        
+## 6 UA              6 2
+\end{verbatim}
+
+Etapa 5 - Intervalo de Confiança
+
+Calculo do intervalo de confiança (95\%) da amostra1.
+
+Fórmula de erro padrão: erro\_padrao = sd(amostra\$arr\_delay) /
+sqrt(nrow(amostra))
+
+Esta fórmula é usada para calcular o desvio padrão de uma distribuição
+da média amostral (de um grande número de amostras de uma população). Em
+outras palavras, só é aplicável quando você está procurando o desvio
+padrão de médias calculadas a partir de uma amostra de tamanho n𝑛,
+tirada de uma população.
+
+Digamos que você obtenha 10000 amostras de uma população qualquer com um
+tamanho de amostra de n = 2. Então calculamos as médias de cada uma
+dessas amostras (teremos 10000 médias calculadas). A equação acima
+informa que, com um número de amostras grande o suficiente, o desvio
+padrão das médias da amostra pode ser aproximado usando esta fórmula:
+sd(amostra) / sqrt(nrow(amostra))
+
+Deve ser intuitivo que o seu desvio padrão das médias da amostra será
+muito pequeno, ou em outras palavras, as médias de cada amostra terão
+muito pouca variação.
+
+Com determinadas condições de inferência (nossa amostra é aleatória,
+normal, independente), podemos realmente usar esse cálculo de desvio
+padrão para estimar o desvio padrão de nossa população. Como isso é
+apenas uma estimativa, é chamado de erro padrão. A condição para usar
+isso como uma estimativa é que o tamanho da amostra n é maior que 30
+(dado pelo teorema do limite central) e atende a condição de
+independência n \textless{}= 10\% do tamanho da população.
+
+amostra 1
+
+Erro Padrão
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{erro_padrao_amostra1 =}\StringTok{ }\KeywordTok{sd}\NormalTok{(amostra1}\OperatorTok{$}\NormalTok{arr_delay) }\OperatorTok{/}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(}\KeywordTok{nrow}\NormalTok{(amostra1))}
+\end{Highlighting}
+\end{Shaded}
+
+Limites Inferior e Superior
+
+1.96 é o valor de z score para 95\% de confiança
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{lower1 =}\StringTok{ }\KeywordTok{mean}\NormalTok{(amostra1}\OperatorTok{$}\NormalTok{arr_delay) }\OperatorTok{-}\StringTok{ }\FloatTok{1.96} \OperatorTok{*}\StringTok{ }\NormalTok{erro_padrao_amostra1}
+\NormalTok{upper1 =}\StringTok{ }\KeywordTok{mean}\NormalTok{(amostra1}\OperatorTok{$}\NormalTok{arr_delay) }\OperatorTok{+}\StringTok{ }\FloatTok{1.96} \OperatorTok{*}\StringTok{ }\NormalTok{erro_padrao_amostra1}
+\end{Highlighting}
+\end{Shaded}
+
+Intervalo de Confiança
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ic_}\DecValTok{1}\NormalTok{ =}\StringTok{ }\KeywordTok{c}\NormalTok{(lower1, upper1)}
+\KeywordTok{mean}\NormalTok{(amostra1}\OperatorTok{$}\NormalTok{arr_delay)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 34.849
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ic_}\DecValTok{1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 31.41951 38.27849
+\end{verbatim}
+
+amostra 2
+
+Erro Padrão
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{erro_padrao_amostra2 =}\StringTok{ }\KeywordTok{sd}\NormalTok{(amostra1}\OperatorTok{$}\NormalTok{arr_delay) }\OperatorTok{/}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(}\KeywordTok{nrow}\NormalTok{(amostra2))}
+\end{Highlighting}
+\end{Shaded}
+
+Limites Inferior e Superior
+
+1.96 é o valor de z score para 95\% de confiança
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{lower2 =}\StringTok{ }\KeywordTok{mean}\NormalTok{(amostra2}\OperatorTok{$}\NormalTok{arr_delay) }\OperatorTok{-}\StringTok{ }\FloatTok{1.96} \OperatorTok{*}\StringTok{ }\NormalTok{erro_padrao_amostra2}
+\NormalTok{upper2 =}\StringTok{ }\KeywordTok{mean}\NormalTok{(amostra2}\OperatorTok{$}\NormalTok{arr_delay) }\OperatorTok{+}\StringTok{ }\FloatTok{1.96} \OperatorTok{*}\StringTok{ }\NormalTok{erro_padrao_amostra2}
+\end{Highlighting}
+\end{Shaded}
+
+Intervalo de Confiança
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ic_}\DecValTok{2}\NormalTok{ =}\StringTok{ }\KeywordTok{c}\NormalTok{(lower2, upper2)}
+\KeywordTok{mean}\NormalTok{(amostra1}\OperatorTok{$}\NormalTok{arr_delay)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 34.849
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ic_}\DecValTok{2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 29.99951 36.85849
+\end{verbatim}
+
+Etapa 6 - Gráfico dos Intervalos de Confianças
+
+Criação de um plot Visualizando os intervalos de confiança criados nos
+itens anteriores.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{toPlot =}\StringTok{ }\KeywordTok{summarise}\NormalTok{(}\KeywordTok{group_by}\NormalTok{(samples, sample_id), }\DataTypeTok{mean =} \KeywordTok{mean}\NormalTok{(arr_delay))}
+\NormalTok{toPlot =}\StringTok{ }\KeywordTok{mutate}\NormalTok{(toPlot, }\DataTypeTok{lower =} \KeywordTok{ifelse}\NormalTok{(toPlot}\OperatorTok{$}\NormalTok{sample_id }\OperatorTok{==}\StringTok{ }\DecValTok{1}\NormalTok{,ic_}\DecValTok{1}\NormalTok{[}\DecValTok{1}\NormalTok{],ic_}\DecValTok{2}\NormalTok{[}\DecValTok{1}\NormalTok{]))}
+\NormalTok{toPlot =}\StringTok{ }\KeywordTok{mutate}\NormalTok{(toPlot, }\DataTypeTok{upper =} \KeywordTok{ifelse}\NormalTok{(toPlot}\OperatorTok{$}\NormalTok{sample_id }\OperatorTok{==}\StringTok{ }\DecValTok{1}\NormalTok{,ic_}\DecValTok{1}\NormalTok{[}\DecValTok{2}\NormalTok{],ic_}\DecValTok{2}\NormalTok{[}\DecValTok{2}\NormalTok{]))}
+\KeywordTok{ggplot}\NormalTok{(toPlot, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ sample_id, }\DataTypeTok{y=}\NormalTok{mean, }\DataTypeTok{colour =}\NormalTok{ sample_id)) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_errorbar}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{ymin=}\NormalTok{lower, }\DataTypeTok{ymax=}\NormalTok{upper), }\DataTypeTok{width=}\NormalTok{.}\DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{relatorio_final_files/figure-latex/grafico-1.pdf}
+
+A maior parte dos dados reside no mesmo intervalo de confiança nas duas
+amostras. Motimo pelo qual podemos dizer que muito provavelmente, as
+amostras vieram da mesma população.
+
+Etapa 7 - Criação do Teste de Hipótese
+
+Crição de um teste de hipótese para verificar se os voos da Delta
+Airlines (DL) atrasam mais do que os voos da UA (United Airlines).
+
+H0 e H1 devem ser mutuamente exclusivas.
+
+\begin{itemize}
+\tightlist
+\item
+  H0 = Não há diferença significativa entre os atrasos da DL e UA (diff
+  da média de atrasos = 0).
+\item
+  H1 = Delta atrasa mais (diff das médias \textgreater{} 0).
+\end{itemize}
+
+ Criação das Amostras
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dl <-}\StringTok{ }\KeywordTok{sample_n}\NormalTok{(}\KeywordTok{filter}\NormalTok{(pop_data, carrier }\OperatorTok{==}\StringTok{ "DL"}\NormalTok{, arr_delay }\OperatorTok{>}\StringTok{ }\DecValTok{0}\NormalTok{), }\DecValTok{1000}\NormalTok{)}
+\NormalTok{ua <-}\StringTok{ }\KeywordTok{sample_n}\NormalTok{(}\KeywordTok{filter}\NormalTok{(pop_data, carrier }\OperatorTok{==}\StringTok{ "UA"}\NormalTok{, arr_delay }\OperatorTok{>}\StringTok{ }\DecValTok{0}\NormalTok{), }\DecValTok{1000}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Calculo do Erro Padrão Médio
+
+Amostra 1
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{se1 =}\StringTok{ }\KeywordTok{sd}\NormalTok{(dl}\OperatorTok{$}\NormalTok{arr_delay) }\OperatorTok{/}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(}\KeywordTok{nrow}\NormalTok{(dl))}
+\KeywordTok{mean}\NormalTok{(dl}\OperatorTok{$}\NormalTok{arr_delay)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 35.624
+\end{verbatim}
+
+Limites Inferior e Superior
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{lower11 =}\StringTok{ }\KeywordTok{mean}\NormalTok{(dl}\OperatorTok{$}\NormalTok{arr_delay) }\OperatorTok{-}\StringTok{ }\FloatTok{1.96} \OperatorTok{*}\StringTok{ }\NormalTok{se1}
+\NormalTok{upper11 =}\StringTok{ }\KeywordTok{mean}\NormalTok{(dl}\OperatorTok{$}\NormalTok{arr_delay) }\OperatorTok{+}\StringTok{ }\FloatTok{1.96} \OperatorTok{*}\StringTok{ }\NormalTok{se1}
+\NormalTok{ic_dl =}\StringTok{ }\KeywordTok{c}\NormalTok{(lower11,upper11)}
+\NormalTok{ic_dl}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 31.85288 39.39512
+\end{verbatim}
+
+Calcula erro padrão e média Amostra 2
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{se2 =}\StringTok{ }\KeywordTok{sd}\NormalTok{(ua}\OperatorTok{$}\NormalTok{arr_delay) }\OperatorTok{/}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(}\KeywordTok{nrow}\NormalTok{(ua))}
+\KeywordTok{mean}\NormalTok{(ua}\OperatorTok{$}\NormalTok{arr_delay)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 36.246
+\end{verbatim}
+
+Limites inferior e superior
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{lower22 =}\StringTok{ }\KeywordTok{mean}\NormalTok{(ua}\OperatorTok{$}\NormalTok{arr_delay) }\OperatorTok{-}\StringTok{ }\FloatTok{1.96} \OperatorTok{*}\StringTok{ }\NormalTok{se2}
+\NormalTok{upper22 =}\StringTok{ }\KeywordTok{mean}\NormalTok{(ua}\OperatorTok{$}\NormalTok{arr_delay) }\OperatorTok{+}\StringTok{ }\FloatTok{1.96} \OperatorTok{*}\StringTok{ }\NormalTok{se2}
+\NormalTok{ic_ua =}\StringTok{ }\KeywordTok{c}\NormalTok{(lower22,upper22)}
+\NormalTok{ic_ua}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 33.09175 39.40025
+\end{verbatim}
+
+Etapa 7.1 - Teste T
+
+O teste t (de Student) foi desenvolvido por Willian Sealy Gosset em 1908
+que usou o pseudônimo ``Student'' em função da confidencialidade
+requerida por seu empregador (cervejaria Guiness) que considerava o uso
+de estatística na manutenção da qualidade como uma vantagem competitiva.
+O teste t de Student tem diversas variações de aplicação, e pode ser
+usado na comparação de duas (e somente duas) médias e as variações dizem
+respeito às hipóteses que são testadas.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{t.test}\NormalTok{(dl}\OperatorTok{$}\NormalTok{arr_delay, ua}\OperatorTok{$}\NormalTok{arr_delay, }\DataTypeTok{alternative=}\StringTok{"greater"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Welch Two Sample t-test
+## 
+## data:  dl$arr_delay and ua$arr_delay
+## t = -0.24797, df = 1937.5, p-value = 0.5979
+## alternative hypothesis: true difference in means is greater than 0
+## 95 percent confidence interval:
+##  -4.749843       Inf
+## sample estimates:
+## mean of x mean of y 
+##    35.624    36.246
+\end{verbatim}
+
+Etapa 7.2 - Valor p
+
+O valor-p é uma quantificação da probabilidade de se errar ao rejeitar
+H0 e a mesma decorre da distribuição estatística adotada. Se o valor-p é
+menor que o nível de significância, conclui-se que o correto é rejeitar
+a hipótese de nulidade.
+
+Valor p é a probabiblidade de que a estatística do teste assuma um valor
+extremo em relação ao valor observado quando H0 é verdadeira.
+
+Estamos trabalhando com alfa igual a 0.05 (95\% de confiança)
+
+Regra
+
+\begin{itemize}
+\tightlist
+\item
+  Baixo valor p: forte evidência empírica contra h0
+\item
+  Alto valor p: pouca ou nenhuma evidência empírica contra h0
+
+   
+\end{itemize}
+
+Etapa 8 - Conclusão
+
+\begin{itemize}
+\tightlist
+\item
+  Falhamos em rejeitar a hipótese nula, pois p-valor é maior que o nível
+  de significância.
+\item
+  Isso que dizer que há uma probabilidade alta de não haver diferença
+  significativa entre os atrasos.
+\item
+  Para os nossos dados, não há evidência estatística de que a DL atrase
+  mais que a UA.
+\end{itemize}
+
+\ldots{}
+
+Dados Pessoais
+
+Site www.rodolfoterra.com
+
+Linkedin rodolffoterra
+
+Repertório no GitHub: Teste de Hipotese
+
+E-mail
+\href{mailto:consultoriaterra@hotmail.com}{\nolinkurl{consultoriaterra@hotmail.com}}
+
+\end{document}
