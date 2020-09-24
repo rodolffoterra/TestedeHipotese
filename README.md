@@ -1,6 +1,6 @@
 # TestedeHipotese
  Existe diferença significante de atrasos de voo entre duas companhia aéreas?
-
+ 
 <h1><b>Sumário</b></h1>
 <p> <font color = white>...</font></p>
 
@@ -43,6 +43,8 @@ library('ggplot2')
 library('dplyr')
 library('nycflights13')
 head(flights)
+
+
 ```
 
 <a name="2"> </a>
@@ -53,6 +55,7 @@ head(flights)
 head(flights)
 # Visualizando as variáveis
 str(flights)
+
 ```
 
 <h3><b>Medidas de Tendência Central da Variável Numéricas</h3></b>
@@ -64,6 +67,9 @@ table(flights$carrier)
 #Histograma
 hist(flights$arr_delay, main = 'Histograma 1', xlab = 'Atraso de Voo')
 ```
+
+ ![My image](https://raw.githubusercontent.com/rodolffoterra/TestedeHipotese/master/Histograma.png?raw=true)
+
 
 <a name="3"> </a>
 <h3><b>Etapa 3 - Construindo o Dataset</h3></b>
@@ -93,6 +99,7 @@ head(pop_data)
 tail(pop_data)
 hist(pop_data$arr_delay, main = 'Histograma 2', xlab = 'Atraso de Voo', ylab="Frequencia")
 ```
+
 
 <h5>É importante observar que neste histograma removemos os valores negativos, pois temos como principal objetivo observar somente os atrasos de voos. Os valores no conjunto de dados que representam menores que zero seguinifica que o voo chegou a sei destido antes da data prevista, então não houve atraso.<h5>
 
